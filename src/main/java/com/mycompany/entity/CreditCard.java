@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import java.util.Optional;
 /**
  *
  * @author macbookpro
@@ -41,6 +41,8 @@ public class CreditCard implements Serializable {
     @Column(name="nameOnCard") 
     private String nameOnCard;
     
+    @Column(name ="CCV")
+    private int CCV;
     
     // relationship with table Booking
     @OneToMany(mappedBy = "creditCard", fetch = FetchType.LAZY)
@@ -49,14 +51,24 @@ public class CreditCard implements Serializable {
     public CreditCard() {
     }
 
-    public CreditCard(int creditCardId, String type, String creditCardNumber, double balance, String nameOnCard, List<Booking> listBooking) {
+    public CreditCard(int creditCardId, String type, String creditCardNumber, double balance, String nameOnCard, int CCV, List<Booking> listBooking) {
         this.creditCardId = creditCardId;
         this.type = type;
         this.creditCardNumber = creditCardNumber;
         this.balance = balance;
         this.nameOnCard = nameOnCard;
+        this.CCV = CCV;
         this.listBooking = listBooking;
     }
+
+    public int getCCV() {
+        return CCV;
+    }
+
+    public void setCCV(int CCV) {
+        this.CCV = CCV;
+    }
+
 
     public int getCreditCardId() {
         return creditCardId;

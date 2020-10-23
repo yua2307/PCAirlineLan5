@@ -43,11 +43,11 @@
 
         <link href="<c:url value="/resources/css/custom.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/paymentDetail.css" />" rel="stylesheet">
-
+       
 
     </head>
 
-    <body class="theme-green">
+    <body class="theme-green" >
         <!-- Page Loader -->
         <div class="page-loader-wrapper">
             <div class="loader">
@@ -90,54 +90,59 @@
             </div>
         </nav>
         <!-- #Top Bar -->
-        
-            <!-- Left Sidebar -->
-            <aside id="leftsidebar" class="sidebar">
-                <!-- Menu -->
-                <div class="menu">
-                    <ul class="list">
-                        <li class="header">MENU</li>
-                        <li>
-                            <a href="<c:url value="/index"/>">
-                                <span>Trang chủ</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value="/userInformation"/>">
-                                <span>Thông tin cá nhân</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value="/customer/history"/>">
-                                <span>Lịch sử giao dịch</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value="/changePassword/"/>">
-                                <span>Đổi mật khẩu</span>
-                            </a>
-                        </li>
-                    </ul>
+
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="header">MENU</li>
+                    <li>
+                        <a href="<c:url value="/index"/>">
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<c:url value="/userInformation"/>">
+                            <span>Thông tin cá nhân</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<c:url value="/customer/paymentMethod"/>">
+                            <span>Phương thức thanh toán</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<c:url value="/customer/history"/>">
+                            <span>Lịch sử giao dịch</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<c:url value="/changePassword/"/>">
+                            <span>Đổi mật khẩu</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2020 <a href="javascript:void(0);">Phương & Chính</a>.
                 </div>
-                <!-- #Menu -->
-                <!-- Footer -->
-                <div class="legal">
-                    <div class="copyright">
-                        &copy; 2020 <a href="javascript:void(0);">Phương & Chính</a>.
-                    </div>
-                    <div class="version">
-                        <b>Version: </b> 1.0.0
-                    </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.0
                 </div>
-                <!-- #Footer -->
-            </aside>
-            <!-- #END# Left Sidebar -->
-              
-            <mvc:form action="payTicket" method="POST" modelAttribute="paymentInfo" > 
+            </div>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+
+        <mvc:form action="payTicket" method="POST" modelAttribute="paymentInfo" > 
             <section class="content">
                 <div class="container-fluid">
                     <div class="block-header align-center">
-                        <h2>Thông tin thanh toán đặt chỗ</h2>
+                        <h2>Phương thức thanh toán</h2>
                     </div>
                     <!-- Basic Table -->
 
@@ -148,13 +153,13 @@
                                     <table class="table table-bordered table-striped">
                                         <thead class="btn-success">
                                             <tr class="text-center">                                           
-                                                
-                                              
+
+
                                                 <th style="width: 15%">Tên người đi</th>
                                                 <th style="width: 17%">Nơi Đi</th>
                                                 <th style="width: 17%">Nơi Đến</th>
-                                                <th style="width: 7%">Ngày đặt vé</th>
-                                                <th style="width: 7%">Ngày bay</th>
+                                                <th style="width: 7%">Hạng vé</th>
+                                                <th style="width: 7%">Loại vé</th>
                                                 <th style="width: 10%">Giá</th>
 
                                             </tr>
@@ -171,21 +176,21 @@
                                                         <br>
                                                         Sân bay ${ticket.flight.getFlightRoute().getArrivalPlace().getAirportName()}
                                                     </td>
-                                                    <td><fmt:formatDate value="${ticket.dateBuyTicket}" pattern="HH:mm aa"/>  <fmt:formatDate value="${ticket.dateBuyTicket}" pattern="dd-MM-YYYY"/> </td> 
-                                                    <td><fmt:formatDate value="${ticket.flight.getDepartureTime()}" pattern="HH:mm aa"/>  <fmt:formatDate value="${ticket.flight.getDepartureTime()}" pattern="dd-MM-YYYY"/> </td> 
+                                                    <td>${ticket.ticketType.getTicketTypeName()} </td> 
+                                                    <td> ${ticket.ticketClass.getClassName()}</td> 
                                                     <td> 
                                                         <fmt:formatNumber currencySymbol="VNĐ" minFractionDigits="0" value = "${ticket.price}" type = "currency" />
                                                     </td>
                                                 </tr>    
-                                           </c:forEach>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td> Tổng tiền : </td>
-                                                    <td>  <fmt:formatNumber currencySymbol="VNĐ" minFractionDigits="0" value = "${booking.totalMoney}" type = "currency" /></td>
-                                                </tr>     
+                                            </c:forEach>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td> Tổng tiền : </td>
+                                                <td>  <fmt:formatNumber currencySymbol="VNĐ" minFractionDigits="0" value = "${booking.totalMoney}" type = "currency" /></td>
+                                            </tr>     
                                         </tbody>
                                     </table>
                                 </div>
@@ -198,7 +203,7 @@
                 </div>
             </section>
             <div class="container" style="width:0px">
-                
+
                 <button style="margin-left: 100px" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Thanh Toán</button>
 
                 <!-- Modal -->
@@ -234,28 +239,28 @@
                                                             <div class="col-xs-7 col-md-7">
                                                                 <div class="form-group">
                                                                     <div class="col-xs-6 col-lg-10 pl-ziro">
-                                                                         <label for="expityMonth">
-                                                                        EXPIRY DATE</label>
+                                                                        <label for="expityMonth">
+                                                                            EXPIRY DATE</label>
                                                                     </div>
                                                                     <div class="col-xs-6 col-lg-6 pl-ziro" >
                                                                         <mvc:input path="month" type="number" min="1" max="12"  class="form-control" id="expityMonth" placeholder="MM" required="required" />
                                                                     </div>
                                                                     <div class="col-xs-6 col-lg-6 pl-ziro">
-                                                                      <mvc:input path="year" type="number" min="2020" max="2024" class="form-control" id="expityYear" placeholder="YY" required="required" /></div>
+                                                                        <mvc:input path="year" type="number" min="2020" max="2024" class="form-control" id="expityYear" placeholder="YY" required="required" /></div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-5 col-md-5 pull-right">
                                                                 <div class="form-group">
                                                                     <label for="cvCode">
                                                                         CV CODE</label>
-                                                                    <mvc:input path="password" type="password" class="form-control" id="cvCode" placeholder="CV" required="required" />
+                                                                        <mvc:password path="CCV" class="form-control" id="cvCode" placeholder="CV" required="required" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-12 col-md-12 ">
                                                                 <div class="form-group">
                                                                     <label for="name">
                                                                         Name On Card</label>
-                                                                     <mvc:input path="nameOnCard" type="text" class="form-control" id="name" placeholder="Name On Card" required="required" />
+                                                                        <mvc:input path="nameOnCard" type="text" class="form-control" id="name" placeholder="Name On Card" required="required" />
                                                                 </div>
                                                             </div>    
                                                         </div>
@@ -264,33 +269,41 @@
                                             </div>
                                             <ul class="nav nav-pills nav-stacked">
                                                 <li class="active"><a href="#"><span class="badge pull-right">
-                                                                            <fmt:formatNumber currencySymbol="VNĐ" minFractionDigits="0" value = "${listTicket.get(0).booking.getTotalMoney()}" type = "currency" />
+                                                            <fmt:formatNumber currencySymbol="VNĐ" minFractionDigits="0" value = "${listTicket.get(0).booking.getTotalMoney()}" type = "currency" />
                                                         </span>Final Payment</a>
                                                 </li>
                                             </ul>
+                                            <ul>
+                                                <li>
+                                                    <a href="<c:url value="/customer/paymentMethod"/>">
+                                                        <span> Thêm phương thức thanh toán</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                             <br>
-                                          
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                                                        
+
                             <div class="modal-footer">
                                 <mvc:button class="btn btn-success m-t-15 w-90 waves-effect">Pay</mvc:button>   
-                                <button type="button" class="btn btn-warning m-t-15 w-90 waves-effect">Cancel</button>
+                                    <button type="button" class="btn btn-warning m-t-15 w-90 waves-effect">Cancel</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-        </mvc:form>                 
+        </mvc:form>   
+        <h1 display="none" id="messagesError"> ${message}</h1>
     </body>
     <!-- Jquery Core Js -->
 
 </script>
 
 <script src="<c:url value="/resources/plugins/jquery/jquery.min.js" />"></script>
-
+<script src="<c:url value="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" />"></script>
 <!-- Bootstrap Core Js -->
 <script src="<c:url value="/resources/plugins/bootstrap/js/bootstrap.js" />"></script>
 
@@ -308,16 +321,22 @@
 <script src="<c:url value="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="//code.jquery.com/jquery-1.11.1.min.js"/>"></script>
 <script>
-    $('input[type="hidden"][value="on"]').remove();
-</script>
+    $('input[type="hidden"][value="on"]').remove();</script>
 <script>
     function formatVND(var number) {
-        return  number.toLocaleString('vi-VN', {currency: 'VND', style: 'currency'});
+    return  number.toLocaleString('vi-VN', {currency: 'VND', style: 'currency'});
     }
 </script>
 <script>
-    function getCurrentYear(){
-       var year = currentTime.getFullYear()
+    function alert(String message){
+    alert(message);
     }
+</script>
+<script type="text/javascript">
+        var error = document.getElementById("messagesError");
+           window.onload = function(){
+              if (error!=null) alert("${message}");
+           }
+       
 </script>
 </html>

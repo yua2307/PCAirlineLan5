@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.mycompany.dao.*; 
 import com.mycompany.entity.CreditCard;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 /**
  *
  * @author macbookpro
@@ -21,5 +22,10 @@ public class CreditCardService {
     @Transactional(rollbackFor={Exception.class})
     public void save(CreditCard creditCard){
         creditCardDAO.save(creditCard);
+    }
+    
+    public CreditCard getCreditCardBy(String creditCardNumber , String nameOnCard , int CCV){
+        Optional<CreditCard> creditCardOpt = creditCardDAO.findByCreditCardNumberAndNameOnCardAndCCV(creditCardNumber,nameOnCard,CCV);
+	return creditCardOpt.isPresent() ? creditCardOpt.get() : null;
     }
 }

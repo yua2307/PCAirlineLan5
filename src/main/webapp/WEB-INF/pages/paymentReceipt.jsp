@@ -161,8 +161,10 @@
                                             <tr>
                                                 <th style="width:5%" class="text-center">Mã Vé</th>
                                                 <th style="width:30%">Tên người đi</th>
+                                                  <th style="width: 7%">Hạng vé</th>
+                                                <th style="width: 7%">Loại vé</th>
                                                 <th class="text-right" style="width:10%">Giá vé</th>
-
+                                                
                                             </tr>
                                         </thead>
                                         
@@ -171,12 +173,16 @@
                                             <c:forEach var="ticket" items="${listTicket}">    
                                                 <td class="text-center">1</td>
                                                 <td>${ticket.namePersonBuyTicket}</td>
+                                                <td>${ticket.ticketType.getTicketTypeName()} </td> 
+                                                <td> ${ticket.ticketClass.getClassName()}</td> 
                                                 <td class="text-right">
                                                      <fmt:formatNumber currencySymbol="VNĐ" minFractionDigits="0" value = "${ticket.price}" type = "currency" />
                                                 </td>
                                             </tr>
                                             </c:forEach>
                                             <tr>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td class="text-right"> Total Money : </td>
                                                 <td class="text-right"><fmt:formatNumber currencySymbol="VNĐ" minFractionDigits="0" value = "${booking.totalMoney}" type = "currency" /> </td>

@@ -32,7 +32,7 @@ public class TicketType implements Serializable {
     @Column(name = "ticketTypeName")
     private String ticketTypeName;
     
-    @Column(name = "rate    ")
+    @Column(name = "rate")
     private double rate;
     
     

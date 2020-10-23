@@ -101,7 +101,7 @@ public class CustomerController {
 
         Customer customerFind = customerService.getCustomerByUsername((String) session.getAttribute("username"));
         booking.setCustomer(customerFind);
-        
+
         booking.setPaymentDate(fmt.parse(fmt.format(date)));
         session.setAttribute("booking", booking);
         model.addAttribute("ticketInfo", new TicketInfo());
@@ -119,7 +119,7 @@ public class CustomerController {
 
     @PostMapping(value = "ticketInfo")
     public String ticketInfo(@ModelAttribute("ticketInfo") TicketInfo t, Model model, HttpSession session) throws ParseException {
-        
+
         Flight flight = (Flight) session.getAttribute("flight");
         Booking booking = (Booking) session.getAttribute("booking");
         List<Ticket> listTicketSession = new ArrayList<>();
@@ -178,29 +178,42 @@ public class CustomerController {
 
     @PostMapping(value = "payTicket")
     public String payTicket(@ModelAttribute("paymentInfo") PaymentInfo payInfo, Model model, HttpSession session) {
+
         Booking booking = (Booking) session.getAttribute("booking");
         Flight flight = (Flight) session.getAttribute("flight");
         flightService.saveFlight(flight);
         List<Ticket> listTicket = (List<Ticket>) session.getAttribute("listTicket");
 
-        CreditCard creditCard = new CreditCard();
-        creditCard.setNameOnCard(payInfo.getNameOnCard());
-        creditCard.setType("VISA");
-        creditCard.setCreditCardNumber(payInfo.getCreditCardNumber());
-        creditCardService.save(creditCard);
+        // Valid Credit Card
+        CreditCard creditCard = creditCardService.getCreditCardBy(payInfo.getCreditCardNumber(), payInfo.getNameOnCard(), payInfo.getCCV());
+        if (creditCard == null) {
+            model.addAttribute("message", "Thông tin thanh toán sai , quý khách vui lòng nhập lại");
+            return "payment";
+        } else {
+            // Valid Credit Card
+            double balance = creditCard.getBalance();
+            if (balance - booking.getTotalMoney() >= 0) {
+                creditCard.setBalance(balance - booking.getTotalMoney());
+                booking.setCreditCard(creditCard);
+                bookingService.saveBooking(booking);
+                for (Ticket ticket : listTicket) {
+                    ticketService.saveTicket(ticket);
+                }
+               // creditCard.getListBooking().add(booking);
+                creditCardService.save(creditCard);
+                model.addAttribute("listTicket", listTicket);
+                model.addAttribute("booking", booking);
 
-        booking.setCreditCard(creditCard);
-        bookingService.saveBooking(booking);
-        for (Ticket ticket : listTicket) {
-            ticketService.saveTicket(ticket);
+                // free session
+                session.removeAttribute("flight");
+                session.removeAttribute("booking");
+                session.removeAttribute("listTicket");
+                return "paymentReceipt";
+            } else {
+                model.addAttribute("message", "Tài khoản của quý khách không đủ tiền để thanh toán");
+                return "payment";
+            }
         }
-       
-        model.addAttribute("listTicket", listTicket);
-        model.addAttribute("booking", booking);
-        session.removeAttribute("flight");
-        session.removeAttribute("booking");
-        session.removeAttribute("listTicket");
-        return "paymentReceipt";
     }
 
     @GetMapping("/redirectCustomer")
@@ -224,4 +237,22 @@ public class CustomerController {
         model.addAttribute("listBooking", listBooking);
         return "transactionHistory";
     }
+    
+    @GetMapping(value ="paymentMethod")
+    public String showPaymentMethod(Model model){
+        model.addAttribute("paymentInfo", new PaymentInfo());
+        return "paymentMethod";
+    }
+    
+    @PostMapping(value = "addCreditCard")
+     public String addCreditCard(@ModelAttribute("paymentInfo") PaymentInfo payInfo, Model model, HttpSession session) {
+         CreditCard creditCard = new CreditCard();
+         creditCard.setCreditCardNumber(payInfo.getCreditCardNumber());
+         creditCard.setNameOnCard(payInfo.getNameOnCard());
+         creditCard.setType("VISA");
+         creditCard.setCCV(payInfo.getCCV());
+         creditCard.setBalance(10000000);
+         creditCardService.save(creditCard);
+         return "redirect:/customer/index";
+     }
 }

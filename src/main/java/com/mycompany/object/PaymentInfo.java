@@ -12,6 +12,8 @@ import java.util.List;
  * @author macbookpro
  */
 public class PaymentInfo {
+    
+    
     private List<Integer> listTicketId;
     private int bookingId;
     private String creditCardNumber;
@@ -20,8 +22,9 @@ public class PaymentInfo {
     private String month;
     private String year;
     private String password;
+    private int CCV;
 
-    public PaymentInfo(List<Integer> listTicketId, int bookingId, String creditCardNumber, String type, String nameOnCard, String month, String year, String password) {
+    public PaymentInfo(List<Integer> listTicketId, int bookingId, String creditCardNumber, String type, String nameOnCard, String month, String year, String password, int CCV) {
         this.listTicketId = listTicketId;
         this.bookingId = bookingId;
         this.creditCardNumber = creditCardNumber;
@@ -30,8 +33,9 @@ public class PaymentInfo {
         this.month = month;
         this.year = year;
         this.password = password;
+        this.CCV = CCV;
     }
-   
+    
    
     
     
@@ -102,6 +106,14 @@ public class PaymentInfo {
 
     public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
+    }
+
+    public int getCCV() {
+        return CCV;
+    }
+
+    public void setCCV(int CCV) {
+        this.CCV = CCV;
     }
     
     

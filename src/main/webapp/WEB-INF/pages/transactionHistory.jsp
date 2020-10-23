@@ -108,6 +108,11 @@
                             </a>
                         </li>
                         <li>
+                            <a href="<c:url value="/customer/paymentMethod"/>">
+                                <span>Phương thức thanh toán</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="<c:url value="/customer/history"/>">
                                 <span>Lịch sử giao dịch</span>
                             </a>

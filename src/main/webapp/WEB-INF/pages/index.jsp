@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="<c:url value="/resources/css/nice-select.css"/>">						
         <link rel="stylesheet" href="<c:url value="/resources/css/animate.min.css"/>">
         <link rel="stylesheet" href="<c:url value="/resources/css/owl.carousel.css"/>">
-
+        
     </head>
     <body>
         <header>
