@@ -32,4 +32,37 @@ public class AdminController {
        model.addAttribute("session", uname);
        return "admin/adminPage";
     }
+    
+    @GetMapping("/addAirport")
+    public String addAirport(){
+        return "admin/addAirport";
+    }
+    @GetMapping("/addAircraft")
+    public String addAircraft(){
+        return "admin/addAircraft";
+    }
+    @GetMapping("/addAirbrand")
+    public String addAirbrand(){
+        return "admin/addAirbrand";
+    }
+    @GetMapping("/addAirroute")
+    public String addAirroute(){
+        return "admin/addAirroute";
+    }
+    @GetMapping("/addFlight")
+    public String addFlight(){
+        return "admin/addFlight";
+    }
+    @GetMapping("/addAdmin")
+    public String addAdmin(){
+        return "admin/addAdmin";
+    }
+    @GetMapping("/allAdmin")
+    public String allAdmin(){
+        return "admin/allAdmin";
+    }
+    @GetMapping("/allCustomer")
+    public String allCustomer(){
+        return "admin/allCustomer";
+    }
 }
