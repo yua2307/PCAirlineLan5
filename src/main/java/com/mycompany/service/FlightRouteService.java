@@ -36,4 +36,8 @@ public class FlightRouteService {
         
         return listPlace;
     }
+
+    public List<FlightRoute> getAllFlightRoute() {
+        return (List<FlightRoute>) flightRouteDAO.findAll();
+    }
 }

@@ -8,6 +8,8 @@ package com.mycompany.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mycompany.dao.*;
+import com.mycompany.entity.Aircaft;
+import java.util.List;
 /**
  *
  * @author macbookpro
@@ -16,4 +18,10 @@ import com.mycompany.dao.*;
 public class AircraftService {
     @Autowired
     AircaftDAOIF aircaftDAO;
+        public void saveAircraft(Aircaft aircaft) {
+        aircaftDAO.save(aircaft);
+    }
+    public List<Aircaft> getAllAircaft(){
+        return (List<Aircaft>) aircaftDAO.findAll();
+    }
 }

@@ -74,7 +74,6 @@
                             <h6 class="collapse-header">Custom Components:</h6>
 
                             <a class="collapse-item" href="<c:url value="/admin/addAirport"/>">Add airport</a>
-                            <a class="collapse-item active" href="<c:url value="/admin/addAirbrand"/>">Add airbrand</a>
                             <a class="collapse-item" href="<c:url value="/admin/addAircraft"/>">Add aircraft</a>
                             <a class="collapse-item" href="<c:url value="/admin/addAirroute"/>">Add airroute</a>
                             <a class="collapse-item" href="<c:url value="/admin/addFlight"/>">Add flight</a>
