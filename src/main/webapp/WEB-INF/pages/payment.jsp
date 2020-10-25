@@ -296,7 +296,7 @@
                     </div>
                 </div>
         </mvc:form>   
-        <h1 display="none" id="messagesError"> ${message}</h1>
+        <h1 style="display:none" id="messagesError"> ${message}</h1>
     </body>
     <!-- Jquery Core Js -->
 
@@ -327,11 +327,7 @@
     return  number.toLocaleString('vi-VN', {currency: 'VND', style: 'currency'});
     }
 </script>
-<script>
-    function alert(String message){
-    alert(message);
-    }
-</script>
+
 <script type="text/javascript">
         var error = document.getElementById("messagesError");
            window.onload = function(){

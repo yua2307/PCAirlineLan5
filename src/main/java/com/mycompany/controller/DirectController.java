@@ -23,50 +23,55 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 /**
  *
  * @author macbookpro
  */
 @Controller
 public class DirectController {
-    
+
     @Autowired
     FlightRouteService flightRouteService;
-    
-
-    @GetMapping(value = "/index")
-    public String toIndexPage(Model model){
-        
-        List<String> listPlace = flightRouteService.getAllPlace();
-        model.addAttribute("listPlace", listPlace);
-        model.addAttribute("searchInformation", new SearchInformation());
-        return "index";
-    }
-
-
 
     @Autowired
     CustomerService customerService;
+
+    @GetMapping(value = "/index")
+    public String toIndexPage(Model model, HttpSession session) {
+
+        Customer customer = new Customer();
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            List<String> listPlace = flightRouteService.getAllPlace();
+            model.addAttribute("listPlace", listPlace);
+            model.addAttribute("searchInformation", new SearchInformation());
+            return "index";
+        } else {
+            customer = customerService.getCustomerByUsername(username);
+            if (customer.getListUserRole().get(0).getUserRole().equals("ROLE_ADMIN")) {
+                return "redirect:/admin/index";
+            } else {
+                List<String> listPlace = flightRouteService.getAllPlace();
+                model.addAttribute("listPlace", listPlace);
+                model.addAttribute("searchInformation", new SearchInformation());
+                return "redirect:/customer/index";
+            }
+        }
+    }
+
     @GetMapping(value = "/userInformation")
-    public String toInforPage(HttpSession session, Customer customer,Model model){
+    public String toInforPage(HttpSession session, Customer customer, Model model) {
         String username = session.getAttribute("username").toString();
-        customer=customerService.getCustomerByUsername(username);
+        customer = customerService.getCustomerByUsername(username);
         model.addAttribute(customer);
         return "userInformation";
     }
 
-    
-
-
-    
-    @GetMapping(value="/changePassword")
-    public String toChangePassPage(Model model){
+    @GetMapping(value = "/changePassword")
+    public String toChangePassPage(Model model) {
         model.addAttribute("changePassInfo", new ChangePassInfo());
         return "changePassword";
     }
-
-    
-
-    
 
 }
