@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.mycompany.entity.*;
 import java.util.HashSet;
+import java.util.Optional;
 /**
  *
  * @author macbookpro
@@ -39,5 +40,12 @@ public class FlightRouteService {
 
     public List<FlightRoute> getAllFlightRoute() {
         return (List<FlightRoute>) flightRouteDAO.findAll();
+    }
+    public void saveFlightRoute(FlightRoute flightRoute) {
+        flightRouteDAO.save(flightRoute);
+    }
+    public FlightRoute getFlightRouteById(int id) {
+        Optional<FlightRoute> flightRouteOpt = flightRouteDAO.findById(id);
+        return flightRouteOpt.isPresent() ? flightRouteOpt.get() : null;
     }
 }

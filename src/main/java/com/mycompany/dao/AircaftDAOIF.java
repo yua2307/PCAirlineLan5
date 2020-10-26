@@ -6,6 +6,7 @@
 package com.mycompany.dao;
 
 import com.mycompany.entity.Aircaft;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AircaftDAOIF extends CrudRepository<Aircaft, Integer>{
-    
+     public Optional<Aircaft> findById(int id);
 }

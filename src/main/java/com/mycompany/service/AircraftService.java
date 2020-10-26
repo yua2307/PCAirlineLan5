@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.mycompany.dao.*;
 import com.mycompany.entity.Aircaft;
 import java.util.List;
+import java.util.Optional;
 /**
  *
  * @author macbookpro
@@ -23,5 +24,9 @@ public class AircraftService {
     }
     public List<Aircaft> getAllAircaft(){
         return (List<Aircaft>) aircaftDAO.findAll();
+    }
+    public Aircaft getAircaftById(int id) {
+        Optional<Aircaft> aircraftOpt = aircaftDAO.findById(id);
+        return aircraftOpt.isPresent() ? aircraftOpt.get() : null;
     }
 }

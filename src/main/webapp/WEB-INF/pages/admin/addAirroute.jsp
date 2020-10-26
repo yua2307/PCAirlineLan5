@@ -341,7 +341,7 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
+                        <p>${result}</p>
                         <mvc:form method="POST" action="addAirrouteProcess" modelAttribute="flightRoute" id="subscribe_frm">
                             <table>
                                 <tr>
