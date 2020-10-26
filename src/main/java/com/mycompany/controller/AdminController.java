@@ -10,6 +10,7 @@ import com.mycompany.entity.AirlineBrand;
 import com.mycompany.entity.Airport;
 import com.mycompany.entity.FlightRoute;
 import com.mycompany.object.InforAircraft;
+import com.mycompany.object.InforFlightRoute;
 import com.mycompany.service.AircraftService;
 import com.mycompany.service.AirlineBrandService;
 import com.mycompany.service.AirportService;
@@ -94,8 +95,9 @@ public class AdminController {
 
     @GetMapping("/addAirroute")
     public String addAirroute(Model model) {
-
-        model.addAttribute("flightRoute", new FlightRoute());
+        List<Airport> airportList = airportService.getAllAirport();
+        model.addAttribute("flightRoute", new InforFlightRoute());
+        model.addAttribute(airportList);
         return "admin/addAirroute";
     }
 

@@ -373,7 +373,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <mvc:button>Add airport</mvc:button>
+                            <mvc:button>Add aircraft</mvc:button>
                         </mvc:form>
                         <br>
                         <table border="1">

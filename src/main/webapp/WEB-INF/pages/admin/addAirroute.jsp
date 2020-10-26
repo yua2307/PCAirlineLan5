@@ -342,7 +342,37 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
-                        <!-- Page Heading -->
+                        <mvc:form method="POST" action="addAirrouteProcess" modelAttribute="flightRoute" id="subscribe_frm">
+                            <table>
+                                <tr>
+                                    <td>Chọn nơi đi </td>
+                                    <td>
+                                        <mvc:select path="departurePlace">
+                                            <c:forEach items="${airportList}" var="tempAirport"> 
+                                                <mvc:option value="${tempAirport.getAirportId()}">${tempAirport.getAirportName()}</mvc:option>
+                                            </c:forEach>
+                                        </mvc:select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Chọn nơi đến</td>
+                                    <td>
+                                        <mvc:select path="arrivalPlace">
+                                            <c:forEach items="${airportList}" var="tempAirport"> 
+                                                <mvc:option value="${tempAirport.getAirportId()}">${tempAirport.getAirportName()}</mvc:option>
+                                            </c:forEach>
+                                        </mvc:select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nhập giá tiêu chuẩn </td>
+                                    <td>
+                                        <mvc:input path="standardPrice"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <mvc:button>Add flight route</mvc:button>
+                        </mvc:form>
 
                     </div>
                     <!-- /.container-fluid -->
