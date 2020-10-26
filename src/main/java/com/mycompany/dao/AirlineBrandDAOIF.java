@@ -6,6 +6,7 @@
 package com.mycompany.dao;
 
 import com.mycompany.entity.AirlineBrand;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AirlineBrandDAOIF  extends CrudRepository<AirlineBrand, Integer>{
-    
+    public Optional<AirlineBrand> findById(int id);
 }

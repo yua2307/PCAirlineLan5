@@ -6,12 +6,16 @@
 package com.mycompany.controller;
 
 import com.mycompany.entity.Aircaft;
+import com.mycompany.entity.AirlineBrand;
 import com.mycompany.entity.Airport;
 import com.mycompany.entity.FlightRoute;
+import com.mycompany.object.InforAircraft;
 import com.mycompany.service.AircraftService;
+import com.mycompany.service.AirlineBrandService;
 import com.mycompany.service.AirportService;
 import com.mycompany.service.FlightRouteService;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,6 +35,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @Autowired
+    AircraftService aircraftService;
+    @Autowired
+    AirportService airportService;
+    @Autowired
+    AirlineBrandService airlineBrandService;
+
     @GetMapping("/index")
     public String hello(Model model, Principal principal, HttpSession session, HttpServletRequest request) {
         String userName = principal.getName();
@@ -43,29 +54,36 @@ public class AdminController {
         model.addAttribute("session", uname);
         return "admin/adminPage";
     }
-    @Autowired
-    AirportService airportService;
 
     @GetMapping("/addAirport")
     public String addAirport(@ModelAttribute("result") String result, Model model) {
         List<Airport> list = airportService.getAllAirport();
         model.addAttribute("result", result);
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
         model.addAttribute("airport", new Airport());
         return "admin/addAirport";
     }
-    @Autowired
-    AircraftService aircraftService;
-    
+
     @GetMapping("/addAircraft")
     public String addAircraft(@ModelAttribute("result") String result, Model model) {
-        List<Aircaft> list = aircraftService.getAllAircaft();
+        List<AirlineBrand> airlinebrandList = airlineBrandService.getAllAirlineBrand();
+        List<Aircaft> templistAircraft = aircraftService.getAllAircaft();
+        List<InforAircraft> listAircraft = new ArrayList();
+//        for (Aircaft a : templistAircraft)
+//        {
+//            InforAircraft i = new InforAircraft();
+//            i.setAircraftName(a.getAircraftName());
+//            i.setModel(a.getModel());
+//            i.setSeatNumber(a.getSeatNumber());
+//            i.setAirlineBrandStr(a.getAirlineBrand().getBrandName().toString());
+//            listAircraft.add(i);
+//        }
+        model.addAttribute("listAircraft", listAircraft);
         model.addAttribute("result", result);
-        model.addAttribute("list",list);
-        model.addAttribute("aircraft", new Aircaft());
+        model.addAttribute("airlinebrandList", airlinebrandList);
+        model.addAttribute("aircraft", new InforAircraft());
         return "admin/addAircraft";
     }
-
 
     @GetMapping("/addAirbrand")
     public String addAirbrand() {
@@ -73,6 +91,7 @@ public class AdminController {
     }
     @Autowired
     FlightRouteService flightRouteService;
+
     @GetMapping("/addAirroute")
     public String addAirroute(Model model) {
 
@@ -106,9 +125,14 @@ public class AdminController {
         model.addAttribute("result", "Them san bay thanh cong");
         return "redirect:/admin/addAirport";
     }
-    
+
     @PostMapping("/addAircraftProcess")
-    public String addAircraftProcess(@ModelAttribute("aircraft") Aircaft aircraft, Model model) {
+    public String addAircraftProcess(@ModelAttribute("aircraft") InforAircraft inforAircraft, Model model) {
+        Aircaft aircraft = new Aircaft();
+        aircraft.setAircraftName(inforAircraft.getAircraftName());
+        aircraft.setModel(inforAircraft.getModel());
+        aircraft.setSeatNumber(inforAircraft.getSeatNumber());
+        AirlineBrand a = airlineBrandService.getAirlineBrandById(inforAircraft.getAirlineBrand());
         aircraftService.saveAircraft(aircraft);
         model.addAttribute("result", "Them san bay thanh cong");
         return "redirect:/admin/addAircraft";

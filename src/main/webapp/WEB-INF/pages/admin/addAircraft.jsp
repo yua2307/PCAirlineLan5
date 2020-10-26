@@ -342,10 +342,56 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <p> ${result}</p>
-                        <div id="form_container">
-                            
-                        </div>
+                        <mvc:form method="POST" action="addAircraftProcess" modelAttribute="aircraft" id="subscribe_frm">
+                            <table>
+                                <tr>
+                                    <td>Nhập số hiệu máy bay </td>
+                                    <td>
+                                        <mvc:input path="aircraftName"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Chọn hãng bay </td>
+                                    <td>
+                                        <mvc:select path="airlineBrand">
+                                            <c:forEach items="${airlinebrandList}" var="tempAirlinebrand"> 
+                                                <mvc:option value="${tempAirlinebrand.getBrandId()}">${tempAirlinebrand.getBrandName()}</mvc:option>
+                                            </c:forEach>
+                                        </mvc:select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nhập mẫu máy bay </td>
+                                    <td>
+                                        <mvc:input path="model"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nhập số chỗ ngồi </td>
+                                    <td>
+                                        <mvc:input path="seatNumber"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <mvc:button>Add airport</mvc:button>
+                        </mvc:form>
                         <br>
+                        <table border="1">
+                            <tr>
+                                <th>Tên máy bay</th>
+                                <th>Hãng</th>
+                                <th>Mẫu máy bay</th>
+                                <th>Số chỗ ngồi</th>
+                            </tr>
+                            <c:forEach var="aircraft" items="${listAircraft}">
+                                <tr>
+                                    <td>${aircraft.aircraftName}</td>
+                                    <td>${aircraft.airlineBrandStr}</td>
+                                    <td>${aircraft.model}</td>
+                                    <td>${aircraft.seatNumber}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
                     </div>
                     <!-- /.container-fluid -->
 
